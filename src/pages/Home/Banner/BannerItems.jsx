@@ -4,7 +4,6 @@ import './BannerItems.css'
 
 const BannerItems = ({slide}) => {
     const {image, id, prev, next} = slide;
-    console.log(id)
     return (
         <div id={`slide${id}`} className="carousel-item relative w-full">
     <div className='carousel-img'>
