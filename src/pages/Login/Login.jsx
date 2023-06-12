@@ -3,9 +3,10 @@ import img from '../../assets/images/login/login.svg'
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-    const {loginUser} = useContext(AuthContext);
+    const {loginUser, loginWithGoogle} = useContext(AuthContext);
     const handleLogin = event =>{
         event.preventDefault();
 
@@ -21,7 +22,19 @@ const Login = () => {
         })
         .catch(error => console.error(error))
 
+    };
+
+
+    const handleToLoginGoogle=()=>{
+      loginWithGoogle()
+      .then(result => {
+        const user = result.user;
+        console.log(user)
+      })
+      .catch(e => console.error(e))
     }
+
+
     return (
         <div className="hero w-full  my-20">
   <div className="hero-content grid gap-10 md:grid-cols-2 flex-col lg:flex-row">
@@ -42,7 +55,7 @@ const Login = () => {
           <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type="text" name='password' placeholder="Password" className="input input-bordered" required/>
+          <input type="password" name='password' placeholder="Password" className="input input-bordered" required/>
           <label className="label">
             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
           </label>
@@ -51,8 +64,13 @@ const Login = () => {
             <input className="btn btn-primary" type="submit" value="Login" />
         </div>
       </form>
-      <p className='text-center'>New to Genius Car!! <Link className='text-orange-600 font-bold' to='/signUp'>Sing Up</Link></p>
+      <div onClick={handleToLoginGoogle}>
+      <button className="btn btn-wide bg-green-500 w-full">sign in with <FaGoogle className='w-4 h-4 text-red-700'/></button>
+      </div>
+      <p className='text-center mt-3'>New to Genius Car!! <Link className='text-orange-600 font-bold' to='/signUp'>Sing Up</Link></p>
+      
     </div>
+    
   </div>
 </div>
     );

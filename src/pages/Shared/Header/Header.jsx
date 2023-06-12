@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../assets/logo.svg'
+import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
+  const {user, logoutUser} = useContext(AuthContext);
     const menuItems = <>
     <li className='font-semibold'><Link to="/">Home</Link></li>
     <li className='font-semibold'><Link to="/login">Login</Link></li>
     </>
+
+  const handleToLogout=()=>{
+    logoutUser()
+    .then(()=>{})
+    .catch(e => console.error(e))
+  }
+
     return (
         <div className="navbar h-20 mb-12 pt-12 bg-base-100">
   <div className="navbar-start">
@@ -27,9 +37,20 @@ const Header = () => {
       {menuItems}
     </ul>
   </div>
+  
   <div className="navbar-end">
+  {
+    user?.uid ?
+    <>
+    <img src={user.photoURL} alt="" className='w-10 rounded-full mr-6' />
+    <button onClick={handleToLogout} className="btn btn-link text-orange-600 no-underline hover:underline">Logout</button>
+    </>
+    :
+    <FaUserCircle className='w-10 h-10 mr-6 text-orange-600'/>
+  }
   <button className="btn btn-outline btn-warning">Appointment</button>
   </div>
+  
 </div>
     );
 };

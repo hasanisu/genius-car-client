@@ -4,7 +4,7 @@ import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
 const SignUp = () => {
-    const {createUser} = useContext(AuthContext);
+    const {createUser, updateUserProfile} = useContext(AuthContext);
 
     const handleSignUp = event =>{
         event.preventDefault();
@@ -17,9 +17,21 @@ const SignUp = () => {
         createUser(email, password)
         .then(result => {
             const user = result.user;
+            handleToUpdateUser(name)
+            form.reset();
             console.log(user)
         })
         .catch(error => console.error(error))
+    }
+
+    const handleToUpdateUser =(name)=>{
+      const userProfile= {
+        displayName: name,
+      }
+      updateUserProfile(userProfile)
+      .then(()=>{})
+      .catch(e => console.error(e))
+      
     }
     return (
         <div className="hero w-full  my-20">
