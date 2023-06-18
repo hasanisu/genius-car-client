@@ -8,7 +8,15 @@ const Header = () => {
   const {user, logoutUser} = useContext(AuthContext);
     const menuItems = <>
     <li className='font-semibold'><Link to="/">Home</Link></li>
-    <li className='font-semibold'><Link to="/login">Login</Link></li>
+    {
+      user?.uid ?
+      <li className='font-semibold'><Link to="/orders">Orders</Link></li>
+      :
+
+      <li className='font-semibold'><Link to="/login">Login</Link></li>
+
+    }
+    
     </>
 
   const handleToLogout=()=>{
