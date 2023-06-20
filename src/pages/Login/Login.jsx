@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { FaGoogle } from "react-icons/fa";
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 
 const Login = () => {
@@ -31,7 +32,7 @@ const Login = () => {
           }
           console.log(currentUser);
           // get jwt token
-          fetch('http://localhost:5000/jwt', {
+          fetch('https://genius-car-server-blush-five.vercel.app/jwt', {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
@@ -55,14 +56,7 @@ const Login = () => {
     };
 
 
-    const handleToLoginGoogle=()=>{
-      loginWithGoogle()
-      .then(result => {
-        const user = result.user;
-        console.log(user)
-      })
-      .catch(e => console.error(e))
-    }
+    
 
 
     return (
@@ -94,11 +88,11 @@ const Login = () => {
             <input className="btn btn-primary" type="submit" value="Login" />
         </div>
       </form>
-      <div onClick={handleToLoginGoogle}>
+      <div>
       <button className="btn btn-wide bg-green-500 w-full">sign in with <FaGoogle className='w-4 h-4 text-red-700'/></button>
       </div>
       <p className='text-center mt-3'>New to Genius Car!! <Link className='text-orange-600 font-bold' to='/signUp'>Sing Up</Link></p>
-      
+      <SocialLogin></SocialLogin>
     </div>
     
   </div>

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { setAuthToken } from '../../api/auth';
 
 const SignUp = () => {
     const {createUser, updateUserProfile} = useContext(AuthContext);
@@ -20,6 +21,7 @@ const SignUp = () => {
             handleToUpdateUser(name)
             form.reset();
             console.log(user)
+            setAuthToken(user)
         })
         .catch(error => console.error(error))
     }
