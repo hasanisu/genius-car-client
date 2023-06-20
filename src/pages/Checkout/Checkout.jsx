@@ -38,7 +38,8 @@ const Checkout = () => {
         fetch('http://localhost:5000/orders', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization:`Bearer ${localStorage.getItem('genius-token')}`
             },
             body:JSON.stringify(order)
         })
@@ -57,11 +58,14 @@ const Checkout = () => {
     }
 
     return (
-        <div>
-            <h2 className='text-4xl'>You are about to order:{title}</h2>
-            <h4 className="text-3xl">{price}</h4>
+        <div className='mb-20'>
+            <h2 className='text-4xl text-center'>You are about to order 
+            <br />
+           <span className='text-2xl font-semibold'>{title}</span>
+            </h2>
+            <h4 className="text-2xl font-semibold text-center mb-20">Price:${price}</h4>
             <form onSubmit={handlePlaceOrder}>
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 ' >
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6' >
                 <input name='firstName' type="text" placeholder="First Name" className="input input-bordered w-full bg-slate-100" />
                 <input name='lastName' type="text" placeholder="Last Name" className="input input-bordered w-full bg-slate-100" />
                 <input name='phone' type="text" placeholder="Your Phone" className="input input-bordered w-full bg-slate-100" required/>

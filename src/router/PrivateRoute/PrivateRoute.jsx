@@ -5,8 +5,9 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 const PrivateRoute = ({children}) => {
     const {user, loading} = useContext(AuthContext)
     const location = useLocation();
+
     if(loading){
-        return <span className="loading loading-infinity loading-lg"></span>
+        return <span className="loading loading-infinity loading-lg text-center"></span>
     }
     if(user){
         return children;

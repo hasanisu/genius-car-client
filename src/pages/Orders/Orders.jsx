@@ -5,23 +5,33 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Orders = () => {
-    const {user} = useContext(AuthContext);
+    const {user, logoutUser} = useContext(AuthContext);
     const [customerOrders, setCustomerOrders] = useState([]);
 
     useEffect(()=>{
-        const fetchData = async () =>{
-            const res = await fetch(`http://localhost:5000/orders?email=${user?.email}`)
-            const data = await res.json();
-            setCustomerOrders(data.data)
-        }
-        fetchData();
-    },[user?.email])
+       
+            fetch(`http://localhost:5000/orders?email=${user?.email}`,{
+                headers:{
+                    authorization:`Bearer ${localStorage.getItem('genius-token')}`
+                }
+            })
+            .then(res => {
+                if(res.status === 401 || res.status === 403){
+                   return logoutUser();
+                }
+                return res.json()
+            })
+            .then(data => setCustomerOrders(data.data))
+    },[user?.email, logoutUser])
 
     const handleDelete = id =>{
         const procced = window.confirm(`Are you sure you want to delete this Id`);
         if(procced){
             fetch(`http://localhost:5000/orders/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers:{
+                    authorization:`Bearer ${localStorage.getItem('genius-token')}`
+                }
             })
             .then(res => res.json())
             .then(data => {
@@ -43,7 +53,8 @@ const Orders = () => {
     fetch(`http://localhost:5000/orders/${id}`, {
         method: 'PATCH',
         headers: {
-            'content-type':'application/json'
+            'content-type':'application/json',
+            authorization:`Bearer ${localStorage.getItem('genius-token')}`
         },
         body: JSON.stringify({status: 'Approved'})
     })
@@ -64,7 +75,7 @@ const Orders = () => {
 
     return (
         <div>
-            <h2 className='text-5xl'>You have {customerOrders.length} Orders </h2>
+            <h2 className='text-5xl'>You have {customerOrders?.length} Orders </h2>
 
             <div className="overflow-x-auto">
   <table className="table">

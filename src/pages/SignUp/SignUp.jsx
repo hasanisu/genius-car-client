@@ -41,7 +41,7 @@ const SignUp = () => {
             <img className='w-3/4' src={img} alt="" />
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 py-20">
-          <h1 className="text-5xl font-bold text-center">Login</h1>
+          <h1 className="text-5xl font-bold text-center">Register</h1>
             <form onSubmit={handleSignUp} className="card-body">
               <div className="form-control">
                 <label className="label">
